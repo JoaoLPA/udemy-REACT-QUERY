@@ -1,14 +1,15 @@
 import './people.css';
-import imgUrl from './imgs/light_saber.svg';
-import errorUrl from './imgs/darth_vader.svg';
+import swUrl from '../imgs/sw.svg';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import ErrorDisplay from '../common/Error/main';
+import LoadingDisplay from '../common/Loading/main';
 import { Person } from './Person';
 
 const initialUrl = 'https://swapi.py4e.com/api/people';
 const fetchUrl = async (url) => {
   const response = await fetch(url);
-  // throw new Error();
+  // throw new Error('Oooops');
   return response.json();
 };
 
@@ -35,23 +36,11 @@ export function InfinitePeople() {
     }
   }
 
-  if (isError)
-    return (
-      <>
-        <p>Ops, something went wrong. Error: {error.toString()}</p>
-        <img src={errorUrl} />
-      </>
-    );
+  if (isError) return <ErrorDisplay error={error} />;
 
   return (
     <>
-      {isFetching || isLoading ? (
-        <img className='light_saber' src={imgUrl} />
-      ) : (
-        <></>
-      )}
-
-      {/* <p className='loading'>Loading</p> */}
+      <LoadingDisplay isFetching={isFetching} isLoading={isLoading} />
       <InfiniteScroll loadMore={getMoreData} hasMore={hasNextPage}>
         {data?.pages?.map((pageData) => {
           return pageData.results.map((person) => {
@@ -66,6 +55,7 @@ export function InfinitePeople() {
           });
         })}
       </InfiniteScroll>
+      {data && !hasNextPage && <img src={swUrl} className='end' />}
     </>
   );
 }

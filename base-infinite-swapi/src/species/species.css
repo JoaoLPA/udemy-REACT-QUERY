@@ -1,0 +1,9 @@
+.speciesEnd {
+  height: 200px;
+  margin: 20px auto;
+  display: block;
+
+  svg path {
+    fill: goldenrod;
+  }
+}
