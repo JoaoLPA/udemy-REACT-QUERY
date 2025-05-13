@@ -1,0 +1,24 @@
+.loading {
+  position: fixed;
+  top: 1vh;
+  right: 5vw;
+}
+
+.light_saber {
+  position: fixed;
+  top: 3vh;
+  right: 5vw;
+  height: 100px;
+  object-fit: contain;
+  animation: spin 2s cubic-bezier(0.4, 0, 1, 1) infinite;
+  /* box-shadow: rgba(96, 159, 226, 0.8) 0 0 90px 33px; */
+  filter: drop-shadow(0 0 5px rgba(96, 159, 226, 0.8)) opacity(50%)
+}
+
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
