@@ -3,7 +3,8 @@ import { useState } from "react";
 
 import type { Staff } from "@shared/types";
 
-// import { filterByTreatment } from "../utils";
+import { filterByTreatment } from "../utils";
+
 import { axiosInstance } from "@/axiosInstance";
 import { queryKeys } from "@/react-query/constants";
 
@@ -20,6 +21,7 @@ export function useStaff() {
   const { data: staff } = useQuery({
     queryKey: [queryKeys.staff],
     queryFn: getStaff,
+    select: (data) => filterByTreatment(data, filter),
   });
 
   return { staff, filter, setFilter };
