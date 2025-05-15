@@ -17,8 +17,16 @@ import { UserAppointments } from "@/components/user/UserAppointments";
 export function Calendar() {
   const currentDate = dayjs();
 
-  const { appointments, monthYear, updateMonthYear, showAll, setShowAll } =
-    useAppointments();
+  const {
+    appointments,
+    monthYear,
+    updateMonthYear,
+    showAll,
+    setShowAll,
+    usePrefetchAppointments,
+  } = useAppointments();
+
+  usePrefetchAppointments();
 
   return (
     <Box>
