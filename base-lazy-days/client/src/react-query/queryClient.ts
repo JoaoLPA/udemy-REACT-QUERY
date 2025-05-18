@@ -1,6 +1,17 @@
-import { QueryCache, QueryClient } from "@tanstack/react-query";
+import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
 
 import { toast } from "@/components/app/toast";
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+type actionsTypes = "query" | "mutation" | (string & {});
+
+function titleFactory(errorMsg: string, actionType: actionsTypes) {
+  const action = actionType === "query" ? "fetch" : "update";
+
+  return `could not ${action} data: ${
+    errorMsg ?? "error connecting to server"
+  }`;
+}
 
 function errorHandler(errorMsg: string) {
   // https://chakra-ui.com/docs/components/toast#preventing-duplicate-toast
@@ -27,6 +38,15 @@ export const queryClient = new QueryClient({
     },
   },
   queryCache: new QueryCache({
-    onError: (error) => errorHandler(error.message),
+    onError: (error) => {
+      const title = titleFactory(error.message, "query");
+      return errorHandler(title);
+    },
+  }),
+  mutationCache: new MutationCache({
+    onError: (error) => {
+      const title = titleFactory(error.message, "mutation");
+      return errorHandler(title);
+    },
   }),
 });
